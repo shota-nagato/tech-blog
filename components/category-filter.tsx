@@ -1,7 +1,8 @@
+import { getCategories } from "@/lib/client";
 import { Button } from "./ui/button";
 
-export default function CategoryFilter() {
-  const categories = ["Frontend", "Backend", "Data Science", "DevOps"];
+export default async function CategoryFilter() {
+  const { contents: categories } = await getCategories();
 
   return (
     <div className="mb-8">
@@ -9,8 +10,8 @@ export default function CategoryFilter() {
       <div className="flex flex-wrap gap-2">
         <Button>ALL</Button>
         {categories.map((category) => (
-          <Button variant="outline" key={category}>
-            {category}
+          <Button variant="outline" key={category.id}>
+            {category.name}
           </Button>
         ))}
       </div>

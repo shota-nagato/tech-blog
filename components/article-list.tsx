@@ -20,7 +20,7 @@ export default async function ArticleList(props: Props) {
   return (
     <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
       {articles.map((article) => (
-        <Link href={`articles/${article.id}`} key={article.id}>
+        <Link href={`/articles/${article.id}`} key={article.id}>
           <Card className="overflow-hidden">
             <div className="relative border">
               <Image

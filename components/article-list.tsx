@@ -5,8 +5,17 @@ import { getArticles } from "@/lib/client";
 import Image from "next/image";
 import { formatDate } from "@/lib/utils";
 
-export default async function ArticleList() {
-  const { contents: articles } = await getArticles();
+type Props = {
+  categoryId?: string;
+};
+
+export default async function ArticleList(props: Props) {
+  const categoryId = props.categoryId;
+  const filters = categoryId ? `category[equals]${categoryId}` : "";
+
+  const { contents: articles } = await getArticles({
+    filters: filters,
+  });
 
   return (
     <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
@@ -14,7 +23,6 @@ export default async function ArticleList() {
         <Link href={`articles/${article.id}`} key={article.id}>
           <Card className="overflow-hidden">
             <div className="relative border">
-              {/* 修正 */}
               <Image
                 className="w-full"
                 src={article.eyecatch?.url ?? "/no-image.png"}

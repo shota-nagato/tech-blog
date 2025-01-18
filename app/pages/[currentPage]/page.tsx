@@ -5,23 +5,20 @@ import { getArticles } from "@/lib/client";
 import { LIMIT } from "@/lib/constants";
 
 export default async function Page(props: {
-  params: Promise<{ categoryId: string }>;
+  params: Promise<{ currentPage: string }>;
 }) {
-  const { categoryId } = await props.params;
+  const { currentPage } = await props.params;
+  const currentPageInt = parseInt(currentPage, 10);
   const { contents: articles, totalCount } = await getArticles({
     limit: LIMIT,
-    offset: 0,
-    filters: `category[equals]${categoryId}`,
+    offset: (currentPageInt - 1) * LIMIT,
   });
 
   return (
     <div>
-      <CategoryFilter currentCategoryId={categoryId} />
+      <CategoryFilter />
       <ArticleList articles={articles} />
-      <Pagination
-        totalCount={totalCount}
-        basePath={`/categories/${categoryId}`}
-      />
+      <Pagination totalCount={totalCount} currentPage={currentPageInt} />
     </div>
   );
 }

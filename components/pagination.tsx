@@ -1,23 +1,27 @@
-import { getArticles } from "@/lib/client";
+import Link from "next/link";
 import { Button } from "./ui/button";
+import { LIMIT } from "@/lib/constants";
 
 type Props = {
+  totalCount: number;
   currentPage?: number;
+  basePath?: string;
 };
 
-export default async function Pagination(props: Props) {
+export default function Pagination(props: Props) {
+  const pageCount = Math.ceil(props.totalCount / LIMIT);
   const currentPage = props.currentPage ?? 1;
-
-  const { totalCount } = await getArticles();
+  const basePath = props.basePath ?? "";
 
   return (
     <div className="mt-8 flex items-center justify-center space-x-2">
-      <Button>1</Button>
-      <Button variant="outline">2</Button>
-      <Button variant="outline">3</Button>
-      <Button variant="outline">4</Button>
-      {currentPage}
-      {totalCount}
+      {Array.from({ length: pageCount }).map((_, i) => (
+        <Link key={i} href={`${basePath}/pages/${i + 1}`}>
+          <Button variant={i + 1 === currentPage ? "default" : "outline"}>
+            {i + 1}
+          </Button>
+        </Link>
+      ))}
     </div>
   );
 }

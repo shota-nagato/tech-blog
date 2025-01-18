@@ -1,6 +1,5 @@
 import Link from "next/link";
-import { Input } from "./ui/input";
-import { Button } from "./ui/button";
+import Search from "./search";
 
 export default function Header() {
   return (
@@ -9,12 +8,7 @@ export default function Header() {
         <Link href="/" className="text-2xl font-bold">
           Tech Blog
         </Link>
-        <form className="mx-4 max-w-sm flex-1">
-          <div className="flex w-full max-w-sm items-center space-x-2">
-            <Input type="text" placeholder="Search articles..." />
-            <Button type="submit">Search</Button>
-          </div>
-        </form>
+        <Search />
       </div>
     </header>
   );

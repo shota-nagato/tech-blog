@@ -2,11 +2,9 @@ import ArticleList from "@/components/article-list";
 import CategoryFilter from "@/components/category-filter";
 import { getArticles } from "@/lib/client";
 
-type Props = {
-  searchParams: { q: string };
-};
-
-export default async function Page(props: Props) {
+export default async function Page(props: {
+  searchParams: Promise<{ q: string }>;
+}) {
   const searchParams = await props.searchParams;
 
   const { contents: articles } = await getArticles({

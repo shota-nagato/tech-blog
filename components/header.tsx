@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Search from "./search";
+import { Suspense } from "react";
 
 export default function Header() {
   return (
@@ -8,7 +9,9 @@ export default function Header() {
         <Link href="/" className="text-2xl font-bold">
           Tech Blog
         </Link>
-        <Search />
+        <Suspense fallback={<div>Loading...</div>}>
+          <Search />
+        </Suspense>
       </div>
     </header>
   );
